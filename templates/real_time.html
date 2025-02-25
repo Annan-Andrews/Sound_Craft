@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Speech Recognition</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('{{ url_for("static", filename="images/real_time.jpg") }}');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            margin-top: 50px;
+            padding: 30px;
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.95); 
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        p {
+            color: #555;
+        }
+        .btn-primary, .btn-danger {
+            width: 150px;
+        }
+        .result-box {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            background: #f8f9fa;
+            border: 1px solid #ccc;
+            min-height: 80px;
+            font-weight: bold;
+        }
+        .alert-danger {
+            display: none;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container text-center">
+        <h1 class="mb-4">Real-Time Speech Recognition</h1>
+        <p>Click the button below and speak to start real-time speech recognition:</p>
+        <button id="startButton" class="btn btn-primary">Start Recording</button>
+        <button id="stopButton" class="btn btn-danger" style="display: none;">Stop Recording</button>
+        <hr>
+        <div class="result-box text-center" id="recognizedText">Speech output will appear here...</div>
+        <div id="errorMessage" class="alert alert-danger" role="alert">
+            Error: Speech recognition failed.
+        </div>
+        <a href="/" class="btn btn-secondary mt-3">Go Back</a>
+    </div>
+
+    <script>
+        const startButton = document.getElementById('startButton');
+        const stopButton = document.getElementById('stopButton');
+        const recognizedText = document.getElementById('recognizedText');
+        const errorMessage = document.getElementById('errorMessage');
+
+        startButton.addEventListener('click', () => {
+            startButton.style.display = 'none';
+            stopButton.style.display = 'inline-block';
+            recognizedText.textContent = 'Listening...';
+            errorMessage.style.display = 'none';
+
+            fetch('/process_audio', {
+                method: 'POST',
+            })
+            .then(response => response.text())
+            .then(data => {
+                recognizedText.textContent = data || 'No speech detected.';
+                startButton.style.display = 'inline-block';
+                stopButton.style.display = 'none';
+            })
+            .catch(error => {
+                errorMessage.style.display = 'block';
+                recognizedText.textContent = 'Error: Speech recognition failed.';
+                startButton.style.display = 'inline-block';
+                stopButton.style.display = 'none';
+            });
+        });
+
+        stopButton.addEventListener('click', () => {
+            startButton.style.display = 'inline-block';
+            stopButton.style.display = 'none';
+        });
+    </script>
+</body>
+</html>

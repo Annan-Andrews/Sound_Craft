@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SoundCraft</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        background-image: url('{{ url_for("static", filename="images/background_image.jpeg") }}');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        color: white;
+      }
+
+      .hero-section {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .hero-section h1,
+      .hero-section p {
+        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
+      }
+
+      .hero-section .container {
+        background: rgba(0, 0, 0, 0.2);
+        padding: 20px;
+        border-radius: 10px;
+        display: inline-block;
+      }
+
+      .features {
+        background: rgb(219, 219, 219);
+        padding: 60px;
+        border-radius: 15px;
+      }
+
+      .features .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .features .card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+      } 
+
+      .footer {
+        text-align: center;
+        padding: 20px;
+        color: black;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav
+      class="navbar navbar-expand-lg navbar-dark bg-dark py-3 fixed-top shadow"
+    >
+      <div class="container">
+        <a class="navbar-brand fw-bold" href="#">SoundCraft</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('audio_text') }}">Audio To Text</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('real_time') }}">Realtime Conversion</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('text_audio') }}">Text To Audio</a>
+            </li>
+            <!-- <li class="nav-item">
+              <a class="nav-link" href="#">Help</a>
+            </li> -->
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-section d-flex align-items-center text-center">
+      <div class="container">
+        <h1 class="display-4 fw-bold">Welcome to SoundCraft</h1>
+        <p class="lead fw-bold">
+          Easily Convert Audio To Text and Text To Speech
+        </p>
+        <a href="#features" class="btn btn-primary btn-lg mt-3">Get Started</a>
+      </div>
+    </div>
+
+    <!-- Features Section -->
+    <div id="features" class="container my-5">
+      <div class="features shadow-lg p-5">
+        <div class="row g-4 text-center">
+          <div class="col-md-4">
+            <div class="card border-0 shadow-sm p-3">
+              <h5 class="card-title">🎙️ Audio To Text</h5>
+              <p class="card-text">
+                Upload an audio file and convert it into text instantly.
+              </p>
+              <a href="{{ url_for('audio_text') }}" class="btn btn-outline-primary">Try Now</a>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card border-0 shadow-sm p-3">
+              <h5 class="card-title">🔊 Realtime Speech</h5>
+              <p class="card-text">
+                Speak directly, and we’ll convert your words into text.
+              </p>
+              <a href="{{ url_for('real_time') }}" class="btn btn-outline-success">Try Now</a>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card border-0 shadow-sm p-3">
+              <h5 class="card-title">📢 Text To Speech</h5>
+              <p class="card-text">
+                Enter text and listen to high-quality speech output.
+              </p>
+              <a href="{{ url_for('text_audio') }}" class="btn btn-outline-warning">Try Now</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer mt-5">
+      <p>&copy; 2025 SoundCraft. All Rights Reserved.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      // Smooth scroll to Features section when clicking "Get Started"
+      document
+        .querySelector('a[href="#features"]')
+        .addEventListener("click", function (e) {
+          e.preventDefault();
+          document
+            .querySelector("#features")
+            .scrollIntoView({ behavior: "smooth" });
+        });
+    </script>
+  </body>
+</html>
